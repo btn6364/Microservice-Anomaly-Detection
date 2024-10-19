@@ -1,0 +1,3 @@
+[submodule "DeepLog"]
+	path = DeepLog
+	url = https://github.com/btn6364/DeepLog.git
