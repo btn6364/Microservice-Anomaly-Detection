@@ -1,3 +1,6 @@
 [submodule "DeepLog"]
 	path = DeepLog
 	url = https://github.com/btn6364/DeepLog.git
+[submodule "train-ticket"]
+	path = train-ticket
+	url = https://github.com/drg5567/train-ticket.git
