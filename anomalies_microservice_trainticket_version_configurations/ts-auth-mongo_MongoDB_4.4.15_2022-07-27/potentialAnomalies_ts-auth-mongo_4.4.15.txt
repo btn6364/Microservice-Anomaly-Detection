@@ -1,0 +1,36 @@
+Anomaly with version update:
+---------------------------------------------------------------------------------
+
+Post call to adminOrderService not possible (new order could not be created with this API Repsone: 
+"
+API Response:
+    "timestamp": 1658925154403,
+    "status": 500,
+    "error": "Internal Server Error",
+    "exception": "org.springframework.web.client.HttpClientErrorException",
+    "message": "403 null",
+    "path": "/api/v1/adminorderservice/adminorder"
+"
+
+	
+LOGS - show an exception: 
+2022-07-27 20:32:33.998  INFO 1 --- [io-16112-exec-3] a.service.AdminOrderServiceImpl          : [Add New Order]
+2022-07-27 20:32:34.331 ERROR 1 --- [io-16112-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.web.client.HttpClientErrorException: 403 null] with root cause
+org.springframework.web.client.HttpClientErrorException: 403 null
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:108) ~[spring-web-4.3.25.RELEASE.jar!/:4.3.25.RELEASE]
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:709) ~[spring-web-4.3.25.RELEASE.jar!/:4.3.25.RELEASE]
+	
+
+
+
+
+
+
+anomaly without version update:
+------------------------------------------------------------------------
+no anomalies identified
+
+
+----------------------------------------------------------------------
+Hints for Execution of requests
+from 14:56 for 1 minute, a lot of requests were executed

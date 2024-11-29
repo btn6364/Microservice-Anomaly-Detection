@@ -1,0 +1,32 @@
+Anomaly with version update:
+---------------------------------------------------------------------------------
+
+show all booked ticket - Orders don't fit requirement when loading http://dashboard-contest.apps.play.gepaplexx.com/client_order_list.html
+2022-07-11 23:11:39.253  WARN 1 --- [io-12031-exec-7] order.service.OrderServiceImpl           : [Query Order] Orders don't fit the requirement, loginId: 4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f
+
+
+
+
+
+
+
+anomaly without version update:
+------------------------------------------------------------------------
+no anomalies identified
+
+
+
+
+NO anomaly:
+-------------------------------------------
+Login requires a lot of time when done via web interface --> however, this also occurs with other versions
+2022-07-11 22:52:28.355  WARN 1 --- [io-12031-exec-6] order.service.OrderServiceImpl           : [Query Order] Orders don't fit the requirement, loginId: 4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f
+
+
+IMPLEMENTATION ISSUE: when tripID does not fit - NullPointerException
+order-service:
+2022-07-12 00:06:39.764  INFO 1 --- [io-12031-exec-2] order.controller.OrderController         : [Security Info Get] 4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f
+
+travel-service: 
+2022-07-12 00:06:40.367  INFO 1 --- [o-12346-exec-10] travel.service.TravelServiceImpl         : [TravelService] [TripAllDetailInfo] TripId: test --< trip ID does not exist
+2022-07-12 00:06:40.373  INFO 1 --- [o-12346-exec-10] i.j.internal.reporters.LoggingReporter   : Span reported: d0e672f49e1083e6:66bcbf2e7fa81f7:1ad3038e30e5bedd:1 - getTripAllDetailInfo
