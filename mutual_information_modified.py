@@ -4,6 +4,7 @@ import statistics
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
+from sklearn.preprocessing import StandardScaler
 
 
 # Adds Gaussian noise to data
@@ -23,7 +24,7 @@ def gaussian_noise(data):
 
 
 # Calculates Mutual Information
-def calculate_mutual_information(anomaly_scores, metrics):
+def calculate_mutual_information(anomaly_scores, metrics, metric_names):
     """
     Calculates Mutual Information between anomaly scores and each metric.
 
@@ -36,11 +37,11 @@ def calculate_mutual_information(anomaly_scores, metrics):
     """
     anomaly_scores = np.array(anomaly_scores)
     metrics = np.array(metrics)
-    mi_scores = []
+    mi_scores = {}
     for i in range(metrics.shape[1]):
+        metric_name = metric_names[i]
         mi_score = mutual_info_regression(metrics[:, i].reshape(-1, 1), anomaly_scores, n_neighbors=2)
-        mi_scores.append(mi_score[0])
-
+        mi_scores[metric_name] = mi_score[0]
     return mi_scores
 
 
@@ -67,25 +68,25 @@ def plot_anomaly_scores(original_scores, noised_scores):
 def generate_metrics():
     # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
     filenames = [
-        "anomalies_microservice_trainticket_version_configurations/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_cpu_seconds_total.json",
-        "anomalies_microservice_trainticket_version_configurations/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_cpu_seconds_total.json",
-        "anomalies_microservice_trainticket_version_configurations/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_cpu_seconds_total.json"
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_cpu_seconds_total.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_cpu_seconds_total.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_cpu_seconds_total.json"
     ]
     metric_name_1, metric_values_1 = generate_metric_values(filenames)
 
     # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
     filenames = [
-        "anomalies_microservice_trainticket_version_configurations/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemAvailable_bytes.json",
-        "anomalies_microservice_trainticket_version_configurations/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_memory_MemAvailable_bytes.json",
-        "anomalies_microservice_trainticket_version_configurations/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemAvailable_bytes.json"
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemAvailable_bytes.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_memory_MemAvailable_bytes.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemAvailable_bytes.json"
     ]
     metric_name_2, metric_values_2 = generate_metric_values(filenames)
 
     # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
     filenames = [
-        "anomalies_microservice_trainticket_version_configurations/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemTotal_bytes.json",
-        "anomalies_microservice_trainticket_version_configurations/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_memory_MemTotal_bytes.json",
-        "anomalies_microservice_trainticket_version_configurations/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemTotal_bytes.json"
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemTotal_bytes.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_memory_MemTotal_bytes.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemTotal_bytes.json"
     ]
     metric_name_3, metric_values_3 = generate_metric_values(filenames)
 
@@ -100,7 +101,7 @@ def generate_metrics():
     # sample2      -        -          -
     # sample3      -        -          -
     df = pd.DataFrame.from_dict(metric_map)
-    return df.to_numpy()
+    return df.to_numpy(), df.columns
 
 def generate_metric_values(filenames):
     metric_name = None
@@ -148,21 +149,17 @@ if __name__ == "__main__":
     # Sample data for demonstration
     # Replace with actual data as needed
     anomaly_scores = generate_anomaly_scores()
-    metrics = generate_metrics()
-
-    # anomaly_scores = np.random.rand(100)  # Example anomaly scores
-    # metrics = np.random.rand(100, 5)
-    # print(anomaly_scores.shape)
-    # print(metrics.shape)
+    metrics, metric_names = generate_metrics()
+    # print(metrics)
 
     # Apply Gaussian noise to anomaly scores
     anomaly_scores_noised = gaussian_noise(anomaly_scores)
 
     # Calculate Mutual Information scores with the noised anomaly scores
-    mi_scores = calculate_mutual_information(anomaly_scores_noised, metrics)
+    mi_scores = calculate_mutual_information(anomaly_scores_noised, metrics, metric_names)
     print("Mutual Information scores for each metric (with noised anomaly scores):")
-    for i, score in enumerate(mi_scores):
-        print(f"Metric {i + 1}: {score}")
+    for metric, score in mi_scores.items():
+        print(f"Metric {metric}: {score}")
 
     # Plot original vs. noised anomaly scores
     plot_anomaly_scores(anomaly_scores, anomaly_scores_noised)
