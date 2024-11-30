@@ -1,0 +1,31 @@
+Anomaly with version update:
+---------------------------------------------------------------------------------
+
+ts-auth-service: login via Token for users not possible anymore (still possible for admin) (--> but Logs do not show this exactly)
+2022-07-13 19:41:53.042  INFO 1 --- [io-12340-exec-2] auth.service.impl.TokenServiceImpl       : LOGIN USER :fdse_microservice __ 111111 __ 1LVW
+2022-07-13 19:41:53.056  INFO 1 --- [io-12340-exec-2] i.j.internal.reporters.LoggingReporter   : Span reported: 81e6f985c960cb6e:9efa498a35d24899:81e6f985c960cb6e:1 - GET
+2022-07-13 19:41:53.061  INFO 1 --- [io-12340-exec-2] i.j.internal.reporters.LoggingReporter   : Span reported: 81e6f985c960cb6e:81e6f985c960cb6e:0:1 - getToken
+
+--> if login successful, token is returned in logs: 
+2022-07-13 19:45:23.861  INFO 1 --- [io-12340-exec-8] auth.service.impl.TokenServiceImpl       : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZHNlX21pY3Jvc2VydmljZSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpZCI6IjRkMmE0NmM3LTcxY2ItNGNmMS1iNWJiLWI2ODQwNmQ5ZGE2ZiIsImlhdCI6MTY1NzcxMjcyMywiZXhwIjoxNjU3NzE2MzIzfQ.9JaOnHz8i7pADuy5y1MJRYGhwVVP46GXpttMC2IxogsUSER TOKEN
+2022-07-13 19:45:23.861  INFO 1 --- [io-12340-exec-8] auth.service.impl.TokenServiceImpl       : 4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f   USER ID
+2022-07-13 19:45:23.864  INFO 1 --- [io-12340-exec-8] i.j.internal.reporters.LoggingReporter   : Span reported: bf18e3a0efca69c:bf18e3a0efca69c:0:1 - getToken
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+anomaly without version update:
+------------------------------------------------------------------------
