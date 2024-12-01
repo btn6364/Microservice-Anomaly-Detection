@@ -2,10 +2,14 @@ import numpy as np
 import DeepLog.find_anomaly_score as AS
 import pandas as pd
 import json
+from datetime import datetime
 
 
 def epsilon_diagnosis(normal_set, abnormal_set):
     # normal set and abnormal set are lists of a given metric measurement in float format
+    if len(normal_set) == 0 or len(abnormal_set) == 0:
+        return 0
+
     ab_var = np.var(abnormal_set)
     norm_var = np.var(normal_set)
     if ab_var == 0 or norm_var == 0:
@@ -127,8 +131,8 @@ def generate_service_metrics():
         metric_name_7: metric_values_7
     }
 
-    df = pd.DataFrame.from_dict(metric_map)
-    return df.to_numpy(), df.columns
+    df = pd.DataFrame.from_dict(metric_map, orient='index').transpose()
+    return df
 
 
 def get_all_metric_values(filenames):
@@ -146,18 +150,51 @@ def get_all_metric_values(filenames):
 
     # Sort based on timestamp
     metric_values_and_timestamp.sort(key=lambda x: x[0])
+    metric_values_and_timestamp = [(float(t), float(m)) for t, m in metric_values_and_timestamp]
 
-    metric_values = [float(metric_value) for _, metric_value in metric_values_and_timestamp]
-    return metric_name, metric_values
+    # metric_values = [float(metric_value) for _, metric_value in metric_values_and_timestamp]
+    return metric_name, metric_values_and_timestamp  # metric_values
+
+
+def is_within_windows(timestamp, windows):
+    return any(s <= timestamp <= e for s, e in windows)
 
 
 if __name__ == '__main__':
-    all_anomaly_scores = AS.main(2, 64, 10, 9, False)
+    # all_anomaly_scores = AS.main(2, 64, 10, 9, False, 'DeepLog/model/Adam_batch_size=2048_epoch=300.pt')
 
-    all_metrics = generate_service_metrics()
+    all_metrics_df = generate_service_metrics()
 
-    abnormal_threshold = .5
-    for k in all_anomaly_scores.keys():
-        serv_anomaly_score = all_anomaly_scores[k]
-        if serv_anomaly_score > abnormal_threshold:
-            pass
+    # Manually sourced from potentialAnomalies files
+    anomaly_time_windows = [("2022-07-08 13:49:15.159", "2022-07-08 13:49:21.266"),
+                            ("2022-07-08 13:57:09.655", "2022-07-08 13:57:09.869"),
+                            ("2022-07-08 13:59:04.954", "2022-07-08 13:59:30.768"),
+                            ("2022-07-08 14:05:00.063", "2022-07-08 14:05:30.870"),
+                            ("2022-07-08 14:48:54.161", "2022-07-08 14:49:07.758"),
+                            ("2022-07-08 14:50:28.247", "2022-07-08 14:50:42.465"),
+                            ("2022-07-08 15:29:46.760", "2022-07-08 15:29:46.861"),
+                            ("2022-07-13 19:41:53.042", "2022-07-13 19:41:53.061"),
+                            ("2022-07-13 19:45:23.861", "2022-07-13 19:45:23.864"),
+                            ("2022-07-12 20:13:04.955", "2022-07-12 20:13:05.260")]
+    int_anom_windows = []
+    # convert all time windows into unix timestamps
+    for window in anomaly_time_windows:
+        s_dt = datetime.strptime(window[0], "%Y-%m-%d %H:%M:%S.%f")
+        e_dt = datetime.strptime(window[1], "%Y-%m-%d %H:%M:%S.%f")
+        start = int(s_dt.timestamp())
+        end = int(e_dt.timestamp())
+        int_anom_windows.append((start, end))
+
+    epsilon_d_values = {}
+    for metric in all_metrics_df.columns:
+        values = all_metrics_df[metric].dropna()
+        abnormal_values = [val for time, val in values if is_within_windows(time, int_anom_windows)]
+        normal_values = [val for time, val in values if not is_within_windows(time, int_anom_windows)]
+        epsilon_d_values[metric] = epsilon_diagnosis(normal_values, abnormal_values)
+
+    print("Epsilon-Diagnosis Results:")
+    for k in epsilon_d_values.keys():
+        print(f"{k}: {epsilon_d_values[k]}")
+
+    # for k in all_anomaly_scores.keys():
+    #     serv_anomaly_score = all_anomaly_scores[k]
