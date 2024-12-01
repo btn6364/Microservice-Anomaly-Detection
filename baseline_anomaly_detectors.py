@@ -12,8 +12,9 @@ def epsilon_diagnosis(normal_set, abnormal_set):
     return result
 
 
-def regression_based_analysis():
-    return
+def regression_based_analysis(anomaly_score_vector, metric_matrix):
+    beta_vector = np.linalg.inv(metric_matrix.T @ metric_matrix) @ metric_matrix.T @ anomaly_score_vector
+    return beta_vector[1:]      # beta[0] is the intercept (alpha) value
 
 
 def correlating_with_time_series(normal_set, abnormal_set):
