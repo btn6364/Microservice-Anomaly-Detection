@@ -90,10 +90,42 @@ def generate_metrics():
     ]
     metric_name_3, metric_values_3 = generate_metric_values(filenames)
 
+    filenames = [
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_network_transmit_packets_total.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_network_transmit_packets_total.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_network_transmit_packets_total.json"
+    ]
+    metric_name_4, metric_values_4 = generate_metric_values(filenames)
+
+    filenames = [
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_container_cpu_usage_seconds_total.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_container_cpu_usage_seconds_total.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_container_cpu_usage_seconds_total.json"
+    ]
+    metric_name_5, metric_values_5 = generate_metric_values(filenames)
+
+    filenames = [
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_container_memory_working_set_bytes.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_container_memory_working_set_bytes.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_container_memory_working_set_bytes.json"
+    ]
+    metric_name_6, metric_values_6 = generate_metric_values(filenames)
+
+    filenames = [
+        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_container_network_transmit_packets_total.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_container_network_transmit_packets_total.json",
+        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_container_network_transmit_packets_total.json"
+    ]
+    metric_name_7, metric_values_7 = generate_metric_values(filenames)
+
     metric_map = {
         metric_name_1: metric_values_1, 
         metric_name_2: metric_values_2, 
         metric_name_3: metric_values_3, 
+        metric_name_4: metric_values_4,
+        metric_name_5: metric_values_5,
+        metric_name_6: metric_values_6,
+        metric_name_7: metric_values_7
     }
     # The result with a 3x3 matrix
     #           metric1   metric2   metric3
@@ -129,6 +161,7 @@ def generate_metric_values(filenames):
         second_mean_metric_value, 
         third_mean_metric_value
     ]
+    
     # Each metric can only get 3 values since we only have 3 anomaly scores
     return metric_name, mean_metric_values
 
