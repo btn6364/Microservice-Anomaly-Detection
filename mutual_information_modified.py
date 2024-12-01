@@ -69,7 +69,7 @@ def generate_metrics():
     # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
     filenames = [
         "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_cpu_seconds_total.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_cpu_seconds_total.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_cpu_seconds_total.json",
         "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_cpu_seconds_total.json"
     ]
     metric_name_1, metric_values_1 = generate_metric_values(filenames)
@@ -77,7 +77,7 @@ def generate_metrics():
     # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
     filenames = [
         "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemAvailable_bytes.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_memory_MemAvailable_bytes.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_memory_MemAvailable_bytes.json",
         "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemAvailable_bytes.json"
     ]
     metric_name_2, metric_values_2 = generate_metric_values(filenames)
@@ -85,7 +85,7 @@ def generate_metrics():
     # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
     filenames = [
         "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemTotal_bytes.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo:4.4.15.json_2022-07-13/ts-auth-service_3_Mongo:4.4.15.json_node_memory_MemTotal_bytes.json",
+        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_memory_MemTotal_bytes.json",
         "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemTotal_bytes.json"
     ]
     metric_name_3, metric_values_3 = generate_metric_values(filenames)
