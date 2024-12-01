@@ -2,6 +2,7 @@ import numpy as np
 
 
 def epsilon_diagnosis(normal_set, abnormal_set):
+    # normal set and abnormal set are lists of a given metric measurement in float format
     ab_var = np.var(abnormal_set)
     norm_var = np.var(normal_set)
     if ab_var == 0 or norm_var == 0:
@@ -13,11 +14,14 @@ def epsilon_diagnosis(normal_set, abnormal_set):
 
 
 def regression_based_analysis(anomaly_score_vector, metric_matrix):
+    # the score vector is a list of the anomaly scores for a given service
+    # metric matrix consists of all the metric values for the given service
     beta_vector = np.linalg.inv(metric_matrix.T @ metric_matrix) @ metric_matrix.T @ anomaly_score_vector
     return beta_vector[1:]      # beta[0] is the intercept (alpha) value
 
 
 def correlating_with_time_series(normal_set, abnormal_set):
+    # normal set and abnormal set are lists of a given metric measurement in float format
     combined_set = []
     for i in range(len(normal_set)):
         combined_set.append(("N", normal_set[i]))
@@ -36,6 +40,7 @@ def correlating_with_time_series(normal_set, abnormal_set):
 
 
 def rth_nearest_neighbor(item, combined_set, r):
+    # calculates Ir function from paper
     item_class = item[0]
     # Calculate 1D euclidean distances
     distances = [(cls, abs(value - item)) for cls, value in combined_set]
