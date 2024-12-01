@@ -66,55 +66,63 @@ def plot_anomaly_scores(original_scores, noised_scores):
     plt.show()
 
 def generate_metrics():
-    # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
+    base_admin_basic_filename = "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE."
+    base_auth_filename = "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15."
+    base_order_filename = "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2."
+
+    # node_cpu_seconds_total
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_cpu_seconds_total.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_cpu_seconds_total.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_cpu_seconds_total.json"
+        base_admin_basic_filename + "json_node_cpu_seconds_total.json",
+        base_auth_filename + "json_node_cpu_seconds_total.json",
+        base_order_filename + "json_node_cpu_seconds_total.json"
     ]
     metric_name_1, metric_values_1 = generate_metric_values(filenames)
 
-    # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
+    # node_memory_MemAvailable_bytes
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemAvailable_bytes.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_memory_MemAvailable_bytes.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemAvailable_bytes.json"
+        base_admin_basic_filename + "json_node_memory_MemAvailable_bytes.json",
+        base_auth_filename + "json_node_memory_MemAvailable_bytes.json",
+        base_order_filename + "json_node_memory_MemAvailable_bytes.json"
     ]
     metric_name_2, metric_values_2 = generate_metric_values(filenames)
 
-    # Collect node_cpu_seconds_total, node_memory_MemAvailable_bytes, node_memory_MemTotal_bytes
+    # node_memory_MemTotal_bytes
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_memory_MemTotal_bytes.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_memory_MemTotal_bytes.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_memory_MemTotal_bytes.json"
+        base_admin_basic_filename + "json_node_memory_MemTotal_bytes.json",
+        base_auth_filename + "json_node_memory_MemTotal_bytes.json",
+        base_order_filename + "json_node_memory_MemTotal_bytes.json"
     ]
     metric_name_3, metric_values_3 = generate_metric_values(filenames)
 
+    # node_network_transmit_packets_total
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_node_network_transmit_packets_total.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_node_network_transmit_packets_total.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_node_network_transmit_packets_total.json"
+        base_admin_basic_filename + "json_node_network_transmit_packets_total.json",
+        base_auth_filename + "json_node_network_transmit_packets_total.json",
+        base_order_filename + "json_node_network_transmit_packets_total.json"
     ]
     metric_name_4, metric_values_4 = generate_metric_values(filenames)
 
+    # container_cpu_usage_seconds_total
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_container_cpu_usage_seconds_total.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_container_cpu_usage_seconds_total.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_container_cpu_usage_seconds_total.json"
+        base_admin_basic_filename + "json_container_cpu_usage_seconds_total.json",
+        base_auth_filename + "json_container_cpu_usage_seconds_total.json",
+        base_order_filename + "json_container_cpu_usage_seconds_total.json"
     ]
     metric_name_5, metric_values_5 = generate_metric_values(filenames)
 
+    # container_memory_working_set_bytes
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_container_memory_working_set_bytes.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_container_memory_working_set_bytes.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_container_memory_working_set_bytes.json"
+        base_admin_basic_filename + "json_container_memory_working_set_bytes.json",
+        base_auth_filename + "json_container_memory_working_set_bytes.json",
+        base_order_filename + "json_container_memory_working_set_bytes.json"
     ]
     metric_name_6, metric_values_6 = generate_metric_values(filenames)
 
+    # json_container_network_transmit_packets_total.json
     filenames = [
-        "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_container_network_transmit_packets_total.json",
-        "anomalies_train_ticket/ts-auth-mongo_4.4.15_2022-07-13/Monitoring_ts-auth-service_3_Mongo_4.4.15.json_2022-07-13/ts-auth-service_3_Mongo_4.4.15.json_container_network_transmit_packets_total.json",
-        "anomalies_train_ticket/ts-order-service_mongodb_4.2.2_2022-07-12/Monitoring_ts-order-service_mongodb_4.2.2.json_2022-07-12/ts-order-service_mongodb_4.2.2.json_container_network_transmit_packets_total.json"
+        base_admin_basic_filename + "json_container_network_transmit_packets_total.json",
+        base_auth_filename + "json_container_network_transmit_packets_total.json",
+        base_order_filename + "json_container_network_transmit_packets_total.json"
     ]
     metric_name_7, metric_values_7 = generate_metric_values(filenames)
 
