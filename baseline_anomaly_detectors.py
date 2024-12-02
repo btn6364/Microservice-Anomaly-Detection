@@ -28,38 +28,6 @@ def regression_based_analysis(anomaly_score_vector, metric_matrix):
     return beta_vector[1:]  # beta[0] is the intercept (alpha) value
 
 
-def correlating_with_time_series(normal_set, abnormal_set):
-    # normal set and abnormal set are lists of a given metric measurement in float format
-    combined_set = []
-    for i in range(len(normal_set)):
-        combined_set.append(("N", normal_set[i]))
-    for i in range(len(abnormal_set)):
-        combined_set.append(("A", abnormal_set[i]))
-
-    p = len(combined_set)
-    r = 3
-    total_sum = 0
-    for i in range(p):
-        for j in range(1, r + 1):
-            st = combined_set[i]
-            same_set = rth_nearest_neighbor(st, combined_set, j)
-            total_sum += same_set
-    return total_sum / (p * r)
-
-
-def rth_nearest_neighbor(item, combined_set, r):
-    # calculates Ir function from paper
-    item_class = item[0]
-    # Calculate 1D euclidean distances
-    distances = [(cls, abs(value - item)) for cls, value in combined_set]
-    sorted_distances = sorted(distances, key=lambda x: x[1])
-
-    class_str, distance = sorted_distances[r]  # would be r - 1 but item is in the set as well
-    if class_str == item_class:
-        return 1
-    else:
-        return 0
-
 
 def generate_service_metrics():
     base_admin_basic_filename = "anomalies_train_ticket/ts-admin-basic-info-service-sprintstarterweb_1.5.22/Monitoring_ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE.json_2022-07-08/ts-admin-basic-info-service_springstarterweb_1.5.22.RELEASE."
@@ -187,7 +155,7 @@ if __name__ == '__main__':
         e_dt = datetime.strptime(window[1], "%Y-%m-%d %H:%M:%S.%f")
         start = int(s_dt.timestamp()) - 36000
         end = int(e_dt.timestamp()) + 36000
-        print(f"start = {start}, end = {end}")
+        # print(f"start = {start}, end = {end}")
         # make windows +/- 8 hours of the actual start and end
         int_anom_windows.append((start, end))
     int_anom_windows = sorted(int_anom_windows, key=lambda x: x[0])
