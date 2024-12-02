@@ -120,6 +120,10 @@ if __name__ == "__main__":
         )
 
         print("Regression Analysis Coefficients (Beta Vector):")
-        print(beta_vector)
+        metric_names = ["node_cpu_seconds_total", "node_memory_MemAvailable_bytes", "node_memory_MemTotal_bytes",
+                        "node_network_transmit_packets_total", "container_cpu_usage_seconds_total",
+                        "container_memory_working_set_bytes", "json_container_network_transmit_packets_total"]
+        for i in range(len(metric_names)):
+            print(f"{metric_names[i]}: {beta_vector[i]}")
     except Exception as e:
         print(f"An error occurred during testing: {e}")
