@@ -153,10 +153,10 @@ def get_all_metric_values(filenames):
 
     # Sort based on timestamp
     metric_values_and_timestamp.sort(key=lambda x: x[0])
-    # metric_values_and_timestamp = [(float(t), float(m)) for t, m in metric_values_and_timestamp]
+    metric_values_and_timestamp = [(float(t), float(m)) for t, m in metric_values_and_timestamp]
 
-    metric_values = [float(metric_value) for _, metric_value in metric_values_and_timestamp]
-    return metric_name, metric_values
+    # metric_values = [float(metric_value) for _, metric_value in metric_values_and_timestamp]
+    return metric_name, metric_values_and_timestamp     # metric_values
 
 
 def is_within_windows(timestamp, windows):
