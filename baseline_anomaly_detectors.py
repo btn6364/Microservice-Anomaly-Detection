@@ -145,15 +145,18 @@ def get_all_metric_values(filenames):
 
         # Print the data
         metric_name = data["result"][0]["metric"]["__name__"]
-        microservice_metric_values_and_timestamp = data["result"][0]["values"]
-        metric_values_and_timestamp.extend(microservice_metric_values_and_timestamp)
+        for i in range(len(data["result"])):
+            vals = data["result"][i]["values"]
+            metric_values_and_timestamp.extend(vals)
+        # microservice_metric_values_and_timestamp = data["result"][0]["values"]
+        # metric_values_and_timestamp.extend(microservice_metric_values_and_timestamp)
 
     # Sort based on timestamp
     metric_values_and_timestamp.sort(key=lambda x: x[0])
-    metric_values_and_timestamp = [(float(t), float(m)) for t, m in metric_values_and_timestamp]
+    # metric_values_and_timestamp = [(float(t), float(m)) for t, m in metric_values_and_timestamp]
 
-    # metric_values = [float(metric_value) for _, metric_value in metric_values_and_timestamp]
-    return metric_name, metric_values_and_timestamp  # metric_values
+    metric_values = [float(metric_value) for _, metric_value in metric_values_and_timestamp]
+    return metric_name, metric_values
 
 
 def is_within_windows(timestamp, windows):
@@ -181,15 +184,19 @@ if __name__ == '__main__':
     for window in anomaly_time_windows:
         s_dt = datetime.strptime(window[0], "%Y-%m-%d %H:%M:%S.%f")
         e_dt = datetime.strptime(window[1], "%Y-%m-%d %H:%M:%S.%f")
-        start = int(s_dt.timestamp())
-        end = int(e_dt.timestamp())
+        start = int(s_dt.timestamp()) - 28800
+        end = int(e_dt.timestamp()) + 28800
+        # make windows +/- 8 hours of the actual start and end
         int_anom_windows.append((start, end))
+    int_anom_windows = sorted(int_anom_windows, key=lambda x: x[0])
 
     epsilon_d_values = {}
     for metric in all_metrics_df.columns:
         values = all_metrics_df[metric].dropna()
-        abnormal_values = [val for time, val in values if is_within_windows(time, int_anom_windows)]
-        normal_values = [val for time, val in values if not is_within_windows(time, int_anom_windows)]
+
+        abnormal_values, normal_values = [], []
+        for time, val in values:
+            (abnormal_values if is_within_windows(time, int_anom_windows) else normal_values).append(val)
         epsilon_d_values[metric] = epsilon_diagnosis(normal_values, abnormal_values)
 
     print("Epsilon-Diagnosis Results:")
