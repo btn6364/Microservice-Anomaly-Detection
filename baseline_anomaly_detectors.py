@@ -9,12 +9,13 @@ def epsilon_diagnosis(normal_set, abnormal_set):
     # normal set and abnormal set are lists of a given metric measurement in float format
     if len(normal_set) == 0 or len(abnormal_set) == 0:
         return 0
-
     ab_var = np.var(abnormal_set)
     norm_var = np.var(normal_set)
     if ab_var == 0 or norm_var == 0:
         return 0
-
+    print(f"normal_size = {len(normal_set)}, abnormal_size = {len(abnormal_set)}")
+    normal_set = normal_set[:min(len(normal_set), len(abnormal_set))]
+    abnormal_set = abnormal_set[:min(len(normal_set), len(abnormal_set))]
     covariance = np.cov(normal_set, abnormal_set, ddof=1)[0, 1]
     result = (covariance ** 2) / np.sqrt(ab_var * norm_var)
     return result
@@ -184,8 +185,9 @@ if __name__ == '__main__':
     for window in anomaly_time_windows:
         s_dt = datetime.strptime(window[0], "%Y-%m-%d %H:%M:%S.%f")
         e_dt = datetime.strptime(window[1], "%Y-%m-%d %H:%M:%S.%f")
-        start = int(s_dt.timestamp()) - 28800
-        end = int(e_dt.timestamp()) + 28800
+        start = int(s_dt.timestamp()) - 36000
+        end = int(e_dt.timestamp()) + 36000
+        print(f"start = {start}, end = {end}")
         # make windows +/- 8 hours of the actual start and end
         int_anom_windows.append((start, end))
     int_anom_windows = sorted(int_anom_windows, key=lambda x: x[0])
@@ -199,9 +201,11 @@ if __name__ == '__main__':
             (abnormal_values if is_within_windows(time, int_anom_windows) else normal_values).append(val)
         epsilon_d_values[metric] = epsilon_diagnosis(normal_values, abnormal_values)
 
+    # Normalize the epsilon values
+    total_epsilon_values = sum(epsilon_d_values.values())
+    for k in epsilon_d_values.keys():
+        epsilon_d_values[k] /= total_epsilon_values
+
     print("Epsilon-Diagnosis Results:")
     for k in epsilon_d_values.keys():
         print(f"{k}: {epsilon_d_values[k]}")
-
-    # for k in all_anomaly_scores.keys():
-    #     serv_anomaly_score = all_anomaly_scores[k]
